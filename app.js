@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const authRoutes = require("./routes/authRoutes");
+
 const addShareRoutes = require("./routes/addShareRoutes");
 
 const port = process.env.PORT || 8000;
@@ -20,6 +21,14 @@ mongoose
 
 // middlewares
 app.use(cors());
+
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+app.use(bodyParser.json());
+
 app.use(express.json());
 
 // routes

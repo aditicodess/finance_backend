@@ -8,6 +8,14 @@ const addShare = async (req, res) => {
     user: req.body.id,
   });
   try {
+    const share = await Share.findOne({ companyName: req.body.companyName });
+    if (share)
+      return res
+        .status(409)
+        .send({
+          message:
+            "Share of this Company already exist, please update in order to make changes",
+        });
     await shareDetails.save();
 
     return res.status(201).json(shareDetails);

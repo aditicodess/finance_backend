@@ -5,20 +5,17 @@ const shareSchema = new Schema(
   {
     companyName: {
       type: String,
+      unique: true,
       required: true,
     },
     noOfShare: {
       type: Number,
       required: true,
     },
-    joined: [
-      {
-        user: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "user",
-        },
-      },
-    ],
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+    },
   },
   { timestamps: true }
 );

@@ -8,19 +8,19 @@ const userSchema = new mongoose.Schema(
     userName: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
-  },
-  {
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true },
   }
+  // {
+  //   toJSON: { virtuals: true },
+  //   toObject: { virtuals: true },
+  // }
 );
 
 // Virtual populate
-userSchema.virtual("shares", {
-  ref: "share",
-  foreignField: "joined.user",
-  localField: "_id",
-});
+// userSchema.virtual("shares", {
+//   ref: "share",
+//   foreignField: "joined.user",
+//   localField: "_id",
+// });
 
 userSchema.methods.generateAuthToken = function () {
   const token = jwt.sign({ _id: this._id }, "thisismynewtask", {
@@ -35,7 +35,7 @@ const signupValidate = (data) => {
   const schema = Joi.object({
     userName: Joi.string().required().label("User Name"),
     email: Joi.string().email().required().label("Email"),
-    share: Joi.string().required().label("Share"),
+    // share: Joi.string().required().label("Share"),
     password: passwordComplexity().required().label("Password"),
   });
   return schema.validate(data);
