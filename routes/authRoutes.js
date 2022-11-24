@@ -8,7 +8,7 @@ router.post("/login", authController.login_post);
 router.post("/signup", authController.signup_post);
 router.post("/forgetpassword", authController.forgetPassword_post);
 router.post(
-  "/resetpassword",
+  "/resetPassword/:id/:token",
   [
     check("password", "Enter atleast 6 character long password")
       .trim()
