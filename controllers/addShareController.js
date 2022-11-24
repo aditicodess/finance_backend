@@ -10,12 +10,10 @@ const addShare = async (req, res) => {
   try {
     const share = await Share.findOne({ companyName: req.body.companyName });
     if (share)
-      return res
-        .status(409)
-        .send({
-          message:
-            "Share of this Company already exist, please update in order to make changes",
-        });
+      return res.status(409).send({
+        message:
+          "Share of this Company already exist, please update in order to make changes",
+      });
     await shareDetails.save();
 
     return res.status(201).json(shareDetails);
@@ -69,7 +67,7 @@ const updateShare = async (req, res) => {
 
   try {
     if (!mongoose.Types.ObjectId.isValid(id))
-      return res.status(404).send(`No course with id: ${id}`);
+      return res.status(404).send(`No company with id: ${id}`);
     await Share.findByIdAndUpdate(id, shareRecords, { new: true });
     const share = await Share.findById(req.params.id);
 
