@@ -5,7 +5,7 @@ const shareSchema = new Schema(
   {
     companyName: {
       type: String,
-      unique: true,
+
       required: true,
     },
     noOfShare: {

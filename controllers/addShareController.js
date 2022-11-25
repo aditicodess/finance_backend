@@ -8,7 +8,9 @@ const addShare = async (req, res) => {
     user: req.body.id,
   });
   try {
-    const share = await Share.findOne({ companyName: req.body.companyName });
+    const share = await Share.findOne({
+      $and: [{ user: req.body.id }, { companyName: req.body.companyName }],
+    });
     if (share)
       return res.status(409).send({
         message:
