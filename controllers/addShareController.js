@@ -71,7 +71,9 @@ const updateShare = async (req, res) => {
     await Share.findByIdAndUpdate(id, shareRecords, { new: true });
     const share = await Share.findById(req.params.id);
 
-    return res.status(200).json(share);
+    return res
+      .status(200)
+      .send({ data: share, message: "share updted successfully" });
   } catch (error) {
     return res.status(500).json(error.message);
   }
@@ -84,7 +86,9 @@ const deleteShare = async (req, res) => {
       return res.status(404).send(`No post with id: ${id}`);
     const share = await Share.findByIdAndDelete(id);
 
-    return res.status(200).json(share);
+    return res
+      .status(200)
+      .send({ data: share, message: "Share deleted successfully" });
   } catch (error) {
     return res.status(500).json(error.message);
   }
