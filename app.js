@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const authRoutes = require("./routes/authRoutes");
+const axios = require("axios");
+const cheerio = require("cheerio");
 
 const addShareRoutes = require("./routes/addShareRoutes");
 
@@ -34,3 +36,35 @@ app.use(express.json());
 // routes
 app.use("/api", authRoutes);
 app.use("/api/addshare", addShareRoutes);
+
+//web-scraping
+axios("https://www.moneycontrol.com/news/business/stocks/")
+  .then((res) => {
+    const htmlData = res.data;
+    const articles = []
+    const $ = cheerio.load(htmlData);
+    $(".clearfix", htmlData).each((index, element) => {
+      const title = $(element).children("h2").text();
+      const titleUrl = $(element).children("a").attr("href");
+      const imageUrl = $(element).children("a").children("img").attr("data");
+      if (
+        title !== undefined &&
+        titleUrl !== undefined &&
+        imageUrl !== undefined
+      ) {
+        articles.push({
+          title,
+          titleUrl,
+          imageUrl,
+        });
+      }
+    });
+    app.get("/news", (req,res)=>{
+      res.send(articles)
+    })
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+
+  
